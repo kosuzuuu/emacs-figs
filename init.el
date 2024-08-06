@@ -13,14 +13,14 @@
 
 (setq visible-bell t)			; Enable visual bell
 
-(load-theme 'ef-winter  t)		; Set custom theme
+(load-theme 'ef-dream  t)		; Set custom theme
 
 (set-face-attribute 'default nil :font "CascadiaMono" :height 100) ; Set custom font
 
 ;; Enable line numbers and columns
-(setq column-number-mode t)
-(display-line-numbers-mode t)		; Set to absolute by default
-(global-display-line-numbers-mode)	; Enabled so line numbers are persistent
+(setq column-number-mode t)	   
+(display-line-numbers-mode t)	   ; Set to absolute by default
+(global-display-line-numbers-mode) ; Enabled so line numbers are persistent
 
 ;; Disable line numbers on selected modes
 (dolist (mode '(org-mode-hook
@@ -69,6 +69,7 @@
 (require 'project)
 
 ;; ==
+
 ;; == KEYBINDS & KEYMAPS ==
 
 ;; Set up Ivy keybinds
@@ -116,9 +117,8 @@
 ;; Line Numbers keybind
 (defhydra hydra-line-number ()
   "Line numbers"
-  ("a" (setq display-line-numbers 1) "Set to absolute")
-  ("r" (setq display-line-numbers 'relative) "Set to relative")
-  ("f" nil "Finish" :exit t))
+  ("a" (setq display-line-numbers 1) "Set to absolute" :exit t)
+  ("r" (setq display-line-numbers 'relative) "Set to relative" :exit t))
 
 (global-set-key (kbd "C-c l") 'hydra-line-number/body) ; Set the keybind
 
@@ -128,6 +128,15 @@
     :diminish which-key-mode
     :config
     (setq which-key-idle-delay 0.1))
+
+;; ==
+
+;;  Magit Configurations
+
+(use-package magit
+  :custom
+  (magit-display-buffer-function #'magit-display-buffer-window-except-diff-v1))
+
 
 ;; == IDE SETUP
 
@@ -141,6 +150,7 @@
     (setq lsp-keymap-prefix "C-l")
     (define-key lsp-mode-map (kbd "C-l") lsp-command-map)
     (setq lsp-file-watch-threshold 15000)
+    (setq lsp-enable-on-type-formatting nil) ; Re-enable if this is useful for you 
     (setq lsp-prefer-flymake nil) ; Set so that lsp-mode uses flycheck
     (require 'ccls)
     (setq ccls-executable "/usr/bin/ccls"))
@@ -150,7 +160,7 @@
     :hook (lsp-mode . lsp-ui-mode)
     :commands (lsp-ui-mode)
     :config
-    (setq lsp-ui-doc-enable -1)
+    (setq lsp-ui-doc-enable nil)
     (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
     (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references))
 
@@ -219,7 +229,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(auto-package-update auto-package vterm ef-themes ccls flycheck company lsp-treemacs treemacs lsp-ivy lsp-ui lsp-mode which-key hydra counsel ivy rainbow-delimiters)))
+   '(magit auto-package-update auto-package vterm ef-themes ccls flycheck company lsp-treemacs treemacs lsp-ivy lsp-ui lsp-mode which-key hydra counsel ivy rainbow-delimiters)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
