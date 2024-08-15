@@ -1,4 +1,4 @@
-;; init.el Configurations
+;;; init.el Configurations
 ;; From kosuzu
 
 (load (concat user-emacs-directory "early-init.el")) ; Load up early-init.el configs
@@ -10,15 +10,14 @@
     :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; == Modeline ==
-;; Doom modeline requires nerd-icons package to be installed 
+;; Doom modeline requires nerd-icons package to be installed
 (use-package doom-modeline
   :config
-  (setq doom-modeline-height 15)	; Adjust modeline height 
+  (setq doom-modeline-height 15)	; Adjust modeline height
   (setq doom-modeline-project-detection 'project) ; Detect project root
   (setq doom-modeline-icon t)			  ; Enable modeline icons (on by default)
   (setq doom-modeline-position-column-line-format '("%l|%c")) ; line/column numbers format
   (setq doom-modeline-total-line-number t)		      ; Display total line numbers
-  (setq doom-mdeline-minor-modes t)			      ; Display minor modes
   (setq doom-modeline-gnus t)				      ;Display GNUs notifs
   (setq doom-modeline-gnus-timer 2)
   :init
@@ -43,9 +42,9 @@
   (package-install 'use-package))
 
 (require 'use-package)
-(setq use-package-always-ensure t) ; Removes the need to do ':ensure t', mostly. 
+(setq use-package-always-ensure t) ; Removes the need to do ':ensure t', mostly.
 
-;; Set up automatic package updater 
+;; Set up automatic package updater
 (use-package auto-package-update
   :custom
   (auto-package-update-interval 2)	; Update every 2 days
@@ -54,10 +53,28 @@
   :config
   (auto-package-update-maybe))
 
-(require 'project) ; Use built-in package.el 
+(require 'project) ; Use built-in package.el
 
 
-;; == Auto-complete, minibuffer, and  Keybindings ==
+;; == Dired configs ==
+(use-package dired
+    :ensure nil ; Dired is already installed, so this is needed
+    :commands (dired dired-jump)
+    :bind (("C-x C-j" . dired-jump))
+    :config
+    (setq dired-listing-switches "-laGhs --group-directories-first") ; Show grouped directories first
+    )
+
+;; Use treemacs icons for dired
+(use-package treemacs-icons-dired
+  :hook (dired-mode . treemacs-icons-dired-mode))
+
+;; Set up dired quick sort, binded to 'S' key,
+;(require 'dired-quick-sort) ; Cant set it up for now, might need to redo later.
+; (dired-quick-sort-setup)
+
+
+;; == Auto-complete & minibuffer configs ==
 ;; Set up Vertico (completion UI)
 (use-package vertico 
   :demand t
@@ -89,6 +106,8 @@
 	   :map minibuffer-local-map
 	   ("C-r" . consult-history)))
 
+
+;;  == Global & Hydra keybindings == 
 ;; Set up Hydra keybinds
 (use-package hydra)
 
@@ -108,6 +127,8 @@
   ("r" (setq display-line-numbers 'relative) "Set to relative" :exit t))
 (global-set-key (kbd "C-c l") 'hydra-line-number/body) ; Set the keybind
 
+(global-set-key (kbd "C-c v") 'vterm)	; vterm keybind
+
 ;; Set up which-key for keybind references
 (use-package which-key
   :init (which-key-mode)
@@ -116,7 +137,7 @@
   (setq which-key-idle-delay 0.1))
 
 
-;; Magit Configurations
+;; == Magit Configurations ==
 
 (use-package magit
   :custom
@@ -134,8 +155,9 @@
     (setq lsp-keymap-prefix "C-l")
     (define-key lsp-mode-map (kbd "C-l") lsp-command-map)
     (setq lsp-file-watch-threshold 15000)
-    (setq lsp-enable-on-type-formatting nil) ; Re-enable if this is useful for you 
-    (setq lsp-prefer-flymake nil) ; Set so that lsp-mode uses flycheck
+    (setq lsp-enable-on-type-formatting nil) ; Re-enable if this is useful for you
+    :custom
+    (setq lsp-prefer-flymake nil) ; Disabled  so that lsp-mode uses flycheck
     (setq lsp-enable-global-mode nil)	; Disable lsp-mode by default unless explicitly toggled on 
     (require 'ccls)
     (setq ccls-executable "/usr/bin/ccls"))
@@ -169,9 +191,9 @@
 (use-package company
   :init (add-hook 'after-init-hook 'global-company-mode)
   :config
-  (setq company-show-numbers t
+  (setq company-show-quick-access t
 	company-minimum-prefix-length 1
-	company-idle-delay 0.5
+	company-idle-delay 0.2
 	company-backends
 	'((company-files		; Files & directory
 	   company-keywords
@@ -208,11 +230,23 @@
 (use-package vterm
     :commands vterm
     :config
-    (setq term-prompt-regexp "*[*#$%>\n]*[#$%>] *") ;
+    (setq term-prompt-regexp "*[*#$%>\n]*[#$%>] *") 
     (setq vterm-max-scrollback 10000))
 
 
 (custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(auth-source-save-behavior nil)
  '(package-selected-packages
-   '(doom-modeline which-key vterm vertico rainbow-delimiters orderless magit lsp-ui lsp-treemacs lsp-ivy flycheck ef-themes counsel consult company ccls auto-package-update)))
-(custom-set-faces)
+   '(treemacs-icons-dired doom-modeline which-key vterm vertico rainbow-delimiters orderless magit lsp-ui lsp-treemacs lsp-ivy flycheck ef-themes counsel consult company ccls auto-package-update)))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(provide 'early-init)
+(provide 'init)
