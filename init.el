@@ -54,6 +54,11 @@
 
 (require 'project) ; Use built-in package.el
 
+;; == Themeing ==
+(set-face-attribute 'default nil :font "CascadiaMono" :height 115) ; Set custom font and size
+(load-theme 'ef-rosa t) ; Set custom theme
+(use-package rainbow-delimiters
+    :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; == Dired configs ==
 (use-package dired
@@ -131,27 +136,8 @@
     :prefix "SPC"
     :global-prefix "C-SPC"))
 
-(defun rune/evil-hook ()
-  (dolist (mode '(custom-mode
-                  eshell-mode
-                  git-rebase-mode
-                  erc-mode
-                  circe-server-mode
-                  circe-chat-mode
-                  circe-query-mode
-                  sauron-mode
-                  term-mode))
-   (add-to-list 'evil-emacs-state-modes mode)))
-
 (use-package evil
-  :init
-  (setq evil-want-integration t)
-  (setq evil-want-keybinding nil)
-  (setq evil-want-C-u-scroll t)
-  (setq evil-want-C-i-jump nil)
-  :hook (evil-mode . rune/evil-hook)
   :config
-  (evil-mode 1)
   (define-key evil-insert-state-map (kbd "C-g") 'evil-normal-state)
   (define-key evil-insert-state-map (kbd "C-h") 'evil-delete-backward-char-and-join)
 
@@ -160,7 +146,13 @@
   (evil-global-set-key 'motion "k" 'evil-previous-visual-line)
 
   (evil-set-initial-state 'messages-buffer-mode 'normal)
-  (evil-set-initial-state 'dashboard-mode 'normal))
+  (evil-set-initial-state 'dashboard-mode 'normal)
+  :init
+  (setq evil-want-integration t)
+  (setq evil-want-keybinding nil)
+  (setq evil-want-C-u-scroll t)
+  (setq evil-want-C-i-jump nil)
+  (evil-mode 1))
 
 (use-package evil-collection
   :after evil
