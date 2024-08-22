@@ -41,7 +41,7 @@
 
 ;; == Auto-completion & minibuffer ==
 ;; == Vertico
-(vertico-grid-mode)	 ; Change minibuffer appearance to grid format
+(vertico-reverse-mode)	 ; Show candidates in reverse order
 (vertico-indexed-mode) ; Allows for index selection with prefix arguments
 
 ;; == Consult
@@ -53,6 +53,10 @@
 
 ;; == Corfu
 (corfu-popupinfo-mode) ; Documentation popup
+
+;; == Marginalia
+(setq marginalia-max-relative-age 0) ; Disable showing relative age
+(setq marginalia-align 'right)
 
 ;; === Dired ===
 (setq dired-listing-switches "-laGhs --group-directories-first") ; Show grouped directories first
@@ -99,7 +103,7 @@
 
 ;; == Themeing
 (load-theme 'ef-rosa t) ; Set custom theme
-(set-face-attribute 'default nil :font "CascadiaMono" :height 115) ; Set custom font and size
+(set-face-attribute 'default nil :font "Cascadia Mono" :height 115) ; Set custom font and size
 
 ;; == Icons
 (add-hook! (dired-mode . treemacs-icons-dired-mode)) ; Use treemacs icons for dired
