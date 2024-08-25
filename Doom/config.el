@@ -106,7 +106,7 @@
 (set-face-attribute 'default nil :font "Cascadia Mono" :height 115) ; Set custom font and size
 
 ;; == Icons
-(add-hook! 'dired-mode #'nerd-icons-dired-mode) ; Use nerd icons for dired
+(add-hook! 'dired-mode-hook #'nerd-icons-dired-mode) ; Use nerd icons for dired
 
 ;; == Modeline
 (setq doom-modeline-height 15) ; Adjust modeline height
