@@ -102,11 +102,11 @@
 (add-to-list 'default-frame-alist '(fullscreen . maximized)) ; Fullscreen on startup
 
 ;; == Themeing
-(load-theme 'ef-rosa t) ; Set custom theme
+(load-theme 'ef-maris-dark t) ; Set custom theme
 (set-face-attribute 'default nil :font "Cascadia Mono" :height 115) ; Set custom font and size
 
 ;; == Icons
-(add-hook! (dired-mode . treemacs-icons-dired-mode)) ; Use treemacs icons for dired
+(add-hook! 'dired-mode #'nerd-icons-dired-mode) ; Use nerd icons for dired
 
 ;; == Modeline
 (setq doom-modeline-height 15) ; Adjust modeline height
