@@ -56,6 +56,6 @@
 
 ;; == Packages ==
 (package! ef-themes) ; Ef (εὖ) themes for Emacs by Protesilaos Stavrou
-(package! treemacs-icons-dired) ; Treemacs icons for dired by Alexander Miller
+(package! nerd-icons-dired) ; Use nerd icons for Dired
 (package! consult) ; Consulting completing-read by minad
 (package! marginalia) ; Marginalia in the minibuffer by minad
