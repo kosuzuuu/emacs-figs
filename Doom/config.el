@@ -123,9 +123,9 @@
 (add-hook 'c-mode-hook
 	  (lambda ()
 	   (setq compile-command
-		 (concat "clang -Wall -std=c17 -lm -o")))) ; -Wall for warnings. -o is to tell where to store the compiler output. Using C17 standard.
+		 (concat "clang -g3 -Wall -Wextra -std=c18 -lm -o")))) ; Using C17/C18 standard
 ; Compiler command with c++-mode
 (add-hook 'c++-mode-hook
 	  (lambda ()
 	    (setq compile-command
-		  (concat "clang++ -Wall -std=c++17 -lm -o")))) ; -Wall for warnings. -o is to tell where to store the compiler output. Uing C++17 standard.
+		  (concat "clang++ -g3 -Wall -Wextra -std=c++17 -lm -o")))) ; Uing C++17 standard.
