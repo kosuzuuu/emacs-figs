@@ -59,3 +59,6 @@
 (package! nerd-icons-dired) ; Use nerd icons for Dired
 (package! consult) ; Consulting completing-read by minad
 (package! marginalia) ; Marginalia in the minibuffer by minad
+
+;; Disabling packages
+(package! doom-theme :disable t)
